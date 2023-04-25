@@ -3,6 +3,8 @@ from tkinter import ttk
 from tkinter import scrolledtext
 from controller.nana_controller import NaNa_ChatController
 
+import os
+import sys
 
 class ChatbotUI(tk.Tk):
     def __init__(self):
@@ -11,7 +13,7 @@ class ChatbotUI(tk.Tk):
         self.title("NaNa")
         self.geometry("700x550")
         self.resizable(False, False)
-        self.iconbitmap('assets\icon.png')
+        self.iconbitmap(self.resource_path("assets\dog_icon_215212.ico"))
         self.controller = NaNa_ChatController(self)
 
         self.create_widgets()
@@ -73,6 +75,7 @@ class ChatbotUI(tk.Tk):
             self.input_entry.configure(state="normal")
             self.input_entry.delete("1.0", "end")
             self.input_entry.configure(state="disabled")
+            self.conversation.see("end")
 
 
     def _clear_conversation(self):
@@ -83,3 +86,8 @@ class ChatbotUI(tk.Tk):
 
     def _insert_newline(self, event=None):
         self.input_entry.insert(tk.INSERT, '\n')
+
+    def resource_path(self,relative_path):
+        if hasattr(sys, '_MEIPASS'):
+            return os.path.join(sys._MEIPASS, relative_path)
+        return os.path.join(os.path.abspath("."), relative_path)
